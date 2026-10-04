@@ -332,6 +332,87 @@
       gap: 22px;
     }
 
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .video-card {
+      display: block;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(25, 195, 125, 0.5);
+    }
+
+    .video-thumbnail {
+      min-height: 210px;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(135deg, rgba(7, 20, 31, 0.15), rgba(7, 20, 31, 0.78)),
+        linear-gradient(135deg, #247c61, #15364d);
+    }
+
+    .video-thumbnail.training {
+      background:
+        linear-gradient(135deg, rgba(7, 20, 31, 0.15), rgba(7, 20, 31, 0.78)),
+        linear-gradient(135deg, #267692, #18304f);
+    }
+
+    .video-thumbnail.goals {
+      background:
+        linear-gradient(135deg, rgba(7, 20, 31, 0.15), rgba(7, 20, 31, 0.78)),
+        linear-gradient(135deg, #a65e36, #452d4b);
+    }
+
+    .video-play {
+      width: 62px;
+      height: 62px;
+      display: grid;
+      place-items: center;
+      padding-left: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      background: rgba(11, 18, 32, 0.65);
+      color: var(--text);
+      font-size: 1.35rem;
+      transition: background 0.2s ease;
+    }
+
+    .video-card:hover .video-play {
+      background: var(--primary-dark);
+    }
+
+    .video-caption {
+      padding: 18px 20px;
+    }
+
+    .video-caption h3 {
+      margin: 0 0 6px;
+      font-size: 1.15rem;
+    }
+
+    .video-caption p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .video-note {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
     .card {
       background: rgba(255,255,255,0.03);
       border: 1px solid var(--line);
@@ -599,7 +680,7 @@
     }
 
     @media (max-width: 900px) {
-      .hero-grid, .main-grid, .feature-grid {
+      .hero-grid, .main-grid, .feature-grid, .video-grid {
         grid-template-columns: 1fr;
       }
 
@@ -655,6 +736,7 @@
           <a href="#home">Home</a>
           <a href="#fixtures">Fixtures</a>
           <a href="#news">News</a>
+          <a href="#videos">Videos</a>
           <a href="#squad">Squad</a>
           <a href="#standings">Standings</a>
         </div>
@@ -1120,6 +1202,49 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="section" id="videos">
+      <div class="container">
+        <div class="section-header">
+          <h2>Football Videos</h2>
+          <span class="muted-link">Watch on YouTube</span>
+        </div>
+
+        <div class="video-grid">
+          <a class="video-card" href="https://www.youtube.com/results?search_query=football+match+highlights" target="_blank" rel="noopener noreferrer" aria-label="Search YouTube for football match highlights">
+            <div class="video-thumbnail">
+              <span class="video-play" aria-hidden="true">▶</span>
+            </div>
+            <div class="video-caption">
+              <h3>Match Highlights</h3>
+              <p>Watch football match highlights on YouTube.</p>
+            </div>
+          </a>
+
+          <a class="video-card" href="https://www.youtube.com/results?search_query=football+team+training+session" target="_blank" rel="noopener noreferrer" aria-label="Search YouTube for football team training sessions">
+            <div class="video-thumbnail training">
+              <span class="video-play" aria-hidden="true">▶</span>
+            </div>
+            <div class="video-caption">
+              <h3>Training Sessions</h3>
+              <p>Find football training drills and team sessions.</p>
+            </div>
+          </a>
+
+          <a class="video-card" href="https://www.youtube.com/results?search_query=football+best+goals+celebrations" target="_blank" rel="noopener noreferrer" aria-label="Search YouTube for football goals and celebrations">
+            <div class="video-thumbnail goals">
+              <span class="video-play" aria-hidden="true">▶</span>
+            </div>
+            <div class="video-caption">
+              <h3>Goals &amp; Celebrations</h3>
+              <p>Browse memorable goals and football celebrations.</p>
+            </div>
+          </a>
+        </div>
+
+        <p class="video-note">These sample links open YouTube search results. Share Musunzu FC video links to feature the club’s own clips here.</p>
       </div>
     </section>
 
