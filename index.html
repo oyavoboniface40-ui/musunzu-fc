@@ -811,6 +811,75 @@
       font-weight: 600;
     }
 
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .shop-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .shop-art {
+      min-height: 155px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(25,195,125,.2), rgba(19,38,61,.9));
+      color: var(--primary);
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .shop-details { padding: 18px; }
+    .shop-details h3 { margin: 0 0 8px; }
+    .shop-details p { min-height: 44px; color: var(--muted); }
+    .shop-details button, .account-form button {
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      padding: 12px;
+      background: #526477;
+      color: #fff;
+      font: inherit;
+      font-weight: 700;
+      cursor: not-allowed;
+    }
+
+    .account-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .account-card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--card);
+    }
+
+    .account-card h3 { margin-top: 0; }
+    .account-card p, .preview-note { color: var(--muted); }
+    .account-form { display: grid; gap: 12px; }
+    .account-form label { display: grid; gap: 6px; color: var(--muted); }
+    .account-form input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: rgba(0,0,0,.15);
+      color: var(--text);
+      font: inherit;
+    }
+    .preview-note { margin: 0 0 20px; }
+
   </style>
 </head>
 <body>
@@ -829,6 +898,8 @@
           <a href="#live">Watch Live</a>
           <a href="#videos">Videos</a>
           <a href="#gallery">Photos</a>
+          <a href="#shop">Shop</a>
+          <a href="#account">Members</a>
           <a href="#squad">Squad</a>
           <a href="#standings">Standings</a>
         </div>
@@ -1409,6 +1480,59 @@
         </div>
       </div>
     </section>
+      <section class="section" id="shop">
+        <div class="container">
+          <div class="section-header">
+            <h2>Musunzu FC Shop</h2>
+            <span class="muted-link">Shop preview</span>
+          </div>
+          <p class="preview-note">Sample merchandise display only. Products, prices, ordering, and payment are not available yet.</p>
+          <div class="shop-grid">
+            <article class="shop-card">
+              <div class="shop-art" aria-hidden="true">MFC</div>
+              <div class="shop-details"><h3>Club Jersey</h3><p>Sample team jersey listing. Price to be confirmed.</p><button type="button" disabled>Coming soon</button></div>
+            </article>
+            <article class="shop-card">
+              <div class="shop-art" aria-hidden="true">FAN</div>
+              <div class="shop-details"><h3>Supporter Scarf</h3><p>Sample supporter item. Price to be confirmed.</p><button type="button" disabled>Coming soon</button></div>
+            </article>
+            <article class="shop-card">
+              <div class="shop-art" aria-hidden="true">FC</div>
+              <div class="shop-details"><h3>Club Cap</h3><p>Sample club item. Price to be confirmed.</p><button type="button" disabled>Coming soon</button></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="account">
+        <div class="container">
+          <div class="section-header">
+            <h2>Member Login &amp; Registration</h2>
+            <span class="muted-link">Account preview</span>
+          </div>
+          <p class="preview-note">Design preview only: account access is not active. Do not enter personal details; these disabled forms do not create accounts or save information.</p>
+          <div class="account-grid">
+            <article class="account-card">
+              <h3>Member Login</h3>
+              <form class="account-form">
+                <label>Email address<input type="email" placeholder="Email address" disabled></label>
+                <label>Password<input type="password" placeholder="Password" disabled></label>
+                <button type="button" disabled>Login coming soon</button>
+              </form>
+            </article>
+            <article class="account-card">
+              <h3>Create an Account</h3>
+              <form class="account-form">
+                <label>Full name<input type="text" placeholder="Full name" disabled></label>
+                <label>Email address<input type="email" placeholder="Email address" disabled></label>
+                <label>Password<input type="password" placeholder="Create a password" disabled></label>
+                <button type="button" disabled>Registration coming soon</button>
+              </form>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section class="section" id="join" style="padding:56px 0;background:#101b2b;color:#edf3ff"><div class="container" style="width:min(900px,92%);margin:auto"><div style="margin-bottom:24px"><span style="color:#f7c948;font-size:.8rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase">Join the club</span><h2 style="margin:8px 0;font-size:clamp(1.8rem,4vw,2.6rem)">Musunzu FC Registration</h2><p style="color:#aab8cf">Register your interest in joining Musunzu FC as a player, supporter, coach, or volunteer.</p></div><form id="club-registration-form" action="mailto:oyavoboniface40@gmail.com?subject=Musunzu%20FC%20Club%20Registration" method="post" enctype="text/plain" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px"><label style="display:grid;gap:6px">Full name<input name="Full name" autocomplete="name" required style="width:100%;padding:12px;border:1px solid #526477;border-radius:8px;box-sizing:border-box"></label><label style="display:grid;gap:6px">Email address<input name="Email" type="email" autocomplete="email" required style="width:100%;padding:12px;border:1px solid #526477;border-radius:8px;box-sizing:border-box"></label><label style="display:grid;gap:6px">Phone number<input name="Phone" type="tel" autocomplete="tel" required style="width:100%;padding:12px;border:1px solid #526477;border-radius:8px;box-sizing:border-box"></label><label style="display:grid;gap:6px">I want to join as<select name="Joining as" required style="width:100%;padding:12px;border:1px solid #526477;border-radius:8px;box-sizing:border-box"><option value="">Choose one</option><option>Player</option><option>Supporter</option><option>Coach</option><option>Volunteer</option></select></label><label style="display:grid;gap:6px;grid-column:1/-1">Message (optional)<textarea name="Message" rows="4" style="width:100%;padding:12px;border:1px solid #526477;border-radius:8px;box-sizing:border-box;resize:vertical"></textarea></label><button type="submit" style="justify-self:start;padding:13px 22px;border:0;border-radius:999px;background:#19c37d;color:#041510;font-weight:700;cursor:pointer">Send Registration</button></form><p style="margin-top:14px;color:#aab8cf;font-size:.88rem">Submitting opens your email app with the registration details addressed to the club. You will need to press Send in that app.</p></div></section></main>
 
     <footer>
