@@ -880,6 +880,34 @@
     }
     .preview-note { margin: 0 0 20px; }
 
+    .account-status {
+      margin: 0 0 18px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: rgba(25,195,125,.1);
+      color: var(--text);
+    }
+    .account-status:empty { display: none; }
+    .account-status[data-state="error"] { background: rgba(255,90,90,.12); color: #ffb3b3; }
+    .account-status[data-state="success"] { background: rgba(25,195,125,.12); color: #a9f2d1; }
+    .account-form label { margin-top: 4px; }
+    .account-form button { width: 100%; cursor: pointer; }
+    .account-form button:disabled, #member-logout-button:disabled { opacity: .65; cursor: wait; }
+    .account-session {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding: 14px 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--card);
+    }
+    .account-session[hidden] { display: none; }
+    .account-session p { margin: 0; }
+    .account-form input:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
   </style>
 </head>
 <body>
@@ -1508,25 +1536,35 @@
         <div class="container">
           <div class="section-header">
             <h2>Member Login &amp; Registration</h2>
-            <span class="muted-link">Account preview</span>
+            <span class="muted-link">Musunzu FC Members</span>
           </div>
-          <p class="preview-note">Design preview only: account access is not active. Do not enter personal details; these disabled forms do not create accounts or save information.</p>
+          <p class="preview-note">Create an account using your email and password. You must confirm your email before your first login. Use the same email and password to return to your account.</p>
+          <p class="account-status" id="member-auth-status" role="status" aria-live="polite"></p>
+          <div class="account-session" id="member-session" hidden>
+            <p>Signed in as <strong id="member-session-email"></strong></p>
+            <button type="button" class="btn btn-secondary" id="member-logout-button">Log out</button>
+          </div>
           <div class="account-grid">
             <article class="account-card">
               <h3>Member Login</h3>
-              <form class="account-form">
-                <label>Email address<input type="email" placeholder="Email address" disabled></label>
-                <label>Password<input type="password" placeholder="Password" disabled></label>
-                <button type="button" disabled>Login coming soon</button>
+              <form class="account-form" id="member-login-form">
+                <label for="member-login-email">Email address</label>
+                <input id="member-login-email" name="email" type="email" autocomplete="email" placeholder="Email address" required>
+                <label for="member-login-password">Password</label>
+                <input id="member-login-password" name="password" type="password" autocomplete="current-password" placeholder="Password" required>
+                <button type="submit" class="btn btn-primary">Log in</button>
               </form>
             </article>
             <article class="account-card">
               <h3>Create an Account</h3>
-              <form class="account-form">
-                <label>Full name<input type="text" placeholder="Full name" disabled></label>
-                <label>Email address<input type="email" placeholder="Email address" disabled></label>
-                <label>Password<input type="password" placeholder="Create a password" disabled></label>
-                <button type="button" disabled>Registration coming soon</button>
+              <form class="account-form" id="member-signup-form">
+                <label for="member-signup-name">Full name</label>
+                <input id="member-signup-name" name="fullName" type="text" autocomplete="name" placeholder="Full name" required maxlength="100">
+                <label for="member-signup-email">Email address</label>
+                <input id="member-signup-email" name="email" type="email" autocomplete="email" placeholder="Email address" required>
+                <label for="member-signup-password">Password (at least 8 characters)</label>
+                <input id="member-signup-password" name="password" type="password" autocomplete="new-password" placeholder="Create a password" minlength="8" required>
+                <button type="submit" class="btn btn-primary">Register</button>
               </form>
             </article>
           </div>
@@ -1598,6 +1636,110 @@
       s1.setAttribute("crossorigin", "*");
       s0.parentNode.insertBefore(s1, s0);
     })();
+  </script>
+  <script type="module">
+    const supabaseUrl = "https://jdmscwinjrwqlsoapaai.supabase.co";
+    const supabasePublishableKey = "sb_publishable_GVss-sOgLEAxzRCLoFV2eA_xoD8xwoC";
+    const status = document.querySelector("#member-auth-status");
+    const sessionPanel = document.querySelector("#member-session");
+    const sessionEmail = document.querySelector("#member-session-email");
+    const loginForm = document.querySelector("#member-login-form");
+    const signupForm = document.querySelector("#member-signup-form");
+    const logoutButton = document.querySelector("#member-logout-button");
+    const setStatus = (message, state = "") => {
+      status.textContent = message;
+      status.dataset.state = state;
+    };
+    const setSession = session => {
+      sessionPanel.hidden = !session;
+      sessionEmail.textContent = session?.user?.email || "";
+    };
+    const setBusy = (form, busy, label) => {
+      const button = form.querySelector("button[type=submit]");
+      if (busy) {
+        button.dataset.originalLabel = button.textContent;
+        button.textContent = label;
+        button.disabled = true;
+      } else {
+        button.textContent = button.dataset.originalLabel || button.textContent;
+        button.disabled = false;
+      }
+    };
+
+    try {
+      const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
+      const supabase = createClient(supabaseUrl, supabasePublishableKey);
+      const redirectTo = window.location.origin + window.location.pathname + "#account";
+
+      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError) throw sessionError;
+      setSession(sessionData.session);
+      supabase.auth.onAuthStateChange((_event, session) => setSession(session));
+
+      loginForm.addEventListener("submit", async event => {
+        event.preventDefault();
+        setStatus("");
+        setBusy(loginForm, true, "Logging in…");
+        const form = new FormData(loginForm);
+        try {
+          const { error } = await supabase.auth.signInWithPassword({
+            email: String(form.get("email")).trim(),
+            password: String(form.get("password"))
+          });
+          if (error) throw error;
+          setStatus("You are now logged in.", "success");
+          loginForm.reset();
+        } catch (error) {
+          setStatus(error.message || "Login failed. Please try again.", "error");
+        } finally {
+          setBusy(loginForm, false);
+        }
+      });
+
+      signupForm.addEventListener("submit", async event => {
+        event.preventDefault();
+        setStatus("");
+        setBusy(signupForm, true, "Registering…");
+        const form = new FormData(signupForm);
+        try {
+          const { data, error } = await supabase.auth.signUp({
+            email: String(form.get("email")).trim(),
+            password: String(form.get("password")),
+            options: {
+              emailRedirectTo: redirectTo,
+              data: { full_name: String(form.get("fullName")).trim() }
+            }
+          });
+          if (error) throw error;
+          signupForm.reset();
+          if (data.session) {
+            setStatus("Your account is ready and you are logged in.", "success");
+          } else {
+            setStatus("Registration received. Check your email and confirm your address before logging in.", "success");
+          }
+        } catch (error) {
+          setStatus(error.message || "Registration failed. Please try again.", "error");
+        } finally {
+          setBusy(signupForm, false);
+        }
+      });
+
+      logoutButton.addEventListener("click", async () => {
+        logoutButton.disabled = true;
+        try {
+          const { error } = await supabase.auth.signOut();
+          if (error) throw error;
+          setStatus("You have logged out.", "success");
+        } catch (error) {
+          setStatus(error.message || "Could not log out. Please try again.", "error");
+        } finally {
+          logoutButton.disabled = false;
+        }
+      });
+    } catch (error) {
+      setStatus("Member accounts could not connect. Please check your connection or try again later.", "error");
+      console.error("Musunzu FC member authentication could not be initialized.", error);
+    }
   </script>
 </body>
 </html>
