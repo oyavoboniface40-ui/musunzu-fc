@@ -1,0 +1,21 @@
+{
+  "id": "./",
+  "name": "Musunzu Football Club",
+  "short_name": "Musunzu FC",
+  "description": "The official Musunzu FC club portal for fixtures, squad news, videos, and supporter updates.",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1220",
+  "theme_color": "#19c37d",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./club.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
