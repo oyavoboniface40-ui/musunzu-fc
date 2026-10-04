@@ -794,6 +794,23 @@
         height: 160px;
       }
     }
+    .club-photo {
+      margin: 0;
+    }
+
+    .club-photo img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+
+    .club-photo figcaption {
+      padding: 16px 18px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
   </style>
 </head>
 <body>
@@ -811,6 +828,7 @@
           <a href="#news">News</a>
           <a href="#live">Watch Live</a>
           <a href="#videos">Videos</a>
+          <a href="#gallery">Photos</a>
           <a href="#squad">Squad</a>
           <a href="#standings">Standings</a>
         </div>
@@ -1308,6 +1326,21 @@
             <a class="btn btn-primary" href="https://studio.youtube.com/" target="_blank" rel="noopener noreferrer">Open YouTube Studio</a>
             <p class="setup-note">A YouTube channel must be created and live streaming enabled before your first broadcast. The player will show the match once the channel is connected.</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="gallery">
+      <div class="container">
+        <div class="section-header">
+          <h2>Club Photos</h2>
+          <span class="muted-link">Musunzu FC matchday</span>
+        </div>
+        <div class="video-grid">
+          <figure class="video-card club-photo">
+            <img src="./Pasted%20Image.png" alt="Musunzu FC players together on the football pitch" loading="lazy">
+            <figcaption>Musunzu FC matchday</figcaption>
+          </figure>
         </div>
       </div>
     </section>
