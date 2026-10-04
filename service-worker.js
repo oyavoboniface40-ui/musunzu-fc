@@ -1,4 +1,4 @@
-const CACHE_NAME = 'musunzu-fc-v2';
+const CACHE_NAME = 'musunzu-fc-v3';
 const APP_SHELL = ['.', 'index.html', 'manifest.webmanifest', 'club.svg']
   .map(path => new URL(path, self.registration.scope).href);
 const INDEX_URL = new URL('index.html', self.registration.scope).href;

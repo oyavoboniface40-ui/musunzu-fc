@@ -420,6 +420,72 @@
       font-size: 0.9rem;
     }
 
+    .live-panel {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 24px;
+      align-items: center;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(25, 195, 125, 0.12), rgba(19, 38, 61, 0.88));
+      box-shadow: var(--shadow);
+    }
+
+    .live-screen {
+      min-height: 300px;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: radial-gradient(circle at center, #193c4a, #07111d 72%);
+      text-align: center;
+    }
+
+    .live-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .live-status::before {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--danger);
+      content: "";
+    }
+
+    .live-screen h3 {
+      margin: 14px 0 6px;
+      font-size: 1.5rem;
+    }
+
+    .live-screen p,
+    .live-copy p {
+      color: var(--muted);
+    }
+
+    .live-copy h3 {
+      margin: 0 0 10px;
+      font-size: 1.6rem;
+    }
+
+    .live-copy .btn {
+      margin-top: 8px;
+    }
+
+    .live-copy .setup-note {
+      margin: 14px 0 0;
+      font-size: 0.88rem;
+    }
+
     .card {
       background: rgba(255,255,255,0.03);
       border: 1px solid var(--line);
@@ -687,7 +753,7 @@
     }
 
     @media (max-width: 900px) {
-      .hero-grid, .main-grid, .feature-grid, .video-grid {
+      .hero-grid, .main-grid, .feature-grid, .video-grid, .live-panel {
         grid-template-columns: 1fr;
       }
 
@@ -743,6 +809,7 @@
           <a href="#home">Home</a>
           <a href="#fixtures">Fixtures</a>
           <a href="#news">News</a>
+          <a href="#live">Watch Live</a>
           <a href="#videos">Videos</a>
           <a href="#squad">Squad</a>
           <a href="#standings">Standings</a>
@@ -1214,6 +1281,32 @@
                 <div class="player-number">20</div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="live">
+      <div class="container">
+        <div class="section-header">
+          <h2>Watch Musunzu FC Live</h2>
+          <span class="muted-link">Powered by YouTube</span>
+        </div>
+
+        <div class="live-panel">
+          <div class="live-screen" aria-live="polite">
+            <div>
+              <span class="live-status">No live match right now</span>
+              <h3>Musunzu FC Live</h3>
+              <p>When a match is streaming, it will be available here.</p>
+            </div>
+          </div>
+
+          <div class="live-copy">
+            <h3>Bring matchday online</h3>
+            <p>Start a live broadcast with the Musunzu FC YouTube channel, then share the channel or live video link so it can be connected to this player for supporters.</p>
+            <a class="btn btn-primary" href="https://studio.youtube.com/" target="_blank" rel="noopener noreferrer">Open YouTube Studio</a>
+            <p class="setup-note">A YouTube channel must be created and live streaming enabled before your first broadcast. The player will show the match once the channel is connected.</p>
           </div>
         </div>
       </div>
